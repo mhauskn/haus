@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * Designed to write data to a standard file
  */
-public class DataWriter 
+public class DataWriter implements Output<String>
 {
 	String file;
 	FileWriter fstream;
@@ -107,5 +107,12 @@ public class DataWriter
 			System.err.println("Error: " + e.getMessage());
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * Writes our storable string to output
+	 */
+	public void add (String storable) {
+		writeln(storable);		
 	}
 }

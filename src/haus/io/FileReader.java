@@ -12,7 +12,7 @@ import java.util.Hashtable;
 /**
  * Reads files
  */
-public class FileReader
+public class FileReader implements Input<String>
 {	
 	File rootDir;
 		
@@ -29,6 +29,16 @@ public class FileReader
 	Hashtable<String, Boolean> ignoreFiles = null;
 	
 	String filterExtension = null;
+	
+	/**
+	 * Regular expression to match folders
+	 */
+	String fileRegExp = null;
+	
+	/**
+	 * Regular expression to match files
+	 */
+	String folderRegExp = null;
 	
 	/**
 	 * Creates a test writer to traverse readable files
@@ -62,34 +72,20 @@ public class FileReader
 	}
 	
 	/**
-	 * Gathers the list of files to traverse- This is done auto-
-	 * mattically when needed.
+	 * Sets a regular expression to match files. Only
+	 * files matching the given regExp will be read.
 	 */
-	void gatherFiles ()
-	{
-		if (gatheredFiles)
-			return;
-		if (!rootDir.exists()) {
-			System.err.println("File not found " + rootDir);
-			System.exit(1);
-		}
-		if (!rootDir.canRead()) {
-			System.err.println("Cannot read " + rootDir);
-			System.exit(1);
-		}
-		if (rootDir.isFile())
-			initializeReader(rootDir);
-		else 
-		{
-			gatherFiles(rootDir);
-			if (toRead.size() == 0)
-			{
-				System.err.println("No readable files gathered from " + rootDir.toString());
-				System.exit(1);
-			}
-			initializeReader(toRead.remove(0));
-		}
-		gatheredFiles = true;
+	public void setFileRegExp (String regExp) {
+		fileRegExp = regExp;
+	}
+	
+	/**
+	 * Sets a regular expression to match folders. Only 
+	 * folders matching the given regExp will have their
+	 * files read. All folders will still be traversed.
+	 */
+	public void setFolderRegExp (String regExp) {
+		folderRegExp = regExp;
 	}
 	
 	/**
@@ -143,7 +139,45 @@ public class FileReader
 		return line;
 	}
 	
+	/**
+	 * Method to satisfy our Input interface
+	 */
+	public String get() {
+		return getNextLine();
+	}
+	
 //------------------PRIVATE METHODS----------------------//
+	
+	/**
+	 * Gathers the list of files to traverse- This is done auto-
+	 * mattically when needed.
+	 */
+	private void gatherFiles ()
+	{
+		if (gatheredFiles)
+			return;
+		if (!rootDir.exists()) {
+			System.err.println("File not found " + rootDir);
+			System.exit(1);
+		}
+		if (!rootDir.canRead()) {
+			System.err.println("Cannot read " + rootDir);
+			System.exit(1);
+		}
+		if (rootDir.isFile())
+			initializeReader(rootDir);
+		else 
+		{
+			gatherFiles(rootDir);
+			if (toRead.size() == 0)
+			{
+				System.err.println("No readable files gathered from " + rootDir.toString());
+				System.exit(1);
+			}
+			initializeReader(toRead.remove(0));
+		}
+		gatheredFiles = true;
+	}
 	
 	/**
 	 * Gather all readable files in dir and recursively
@@ -164,12 +198,24 @@ public class FileReader
 			if (ignoreFiles.containsKey(fileName) || ignoreExtensions.containsKey(extension))
 				continue;
 			
-			if (f.isFile() && f.canRead())
-				toRead.add(f);
+			if (fileRegExp != null && f.isFile() && !f.getName().matches(fileRegExp))
+				continue;
+			
+			if (f.isFile() && f.canRead() && matchesRegExp(dir.getName(), folderRegExp))
+					toRead.add(f);
 			
 			if (f.isDirectory() && f.canRead() && doRecursiveRead)
 				gatherFiles(f);
 		}
+	}
+	
+	/**
+	 * Checks if a given string matches the given regexp
+	 */
+	private boolean matchesRegExp (String toMatch, String regExp) {
+		if (regExp == null || toMatch.matches(regExp))
+			return true;
+		return false;
 	}
 	
 	/**
