@@ -55,6 +55,18 @@ public class FileReader implements Input<String>
 	}
 	
 	/**
+	 * Static method reading a given file into an Arraylist
+	 */
+	public static ArrayList<String> readFile (String fileName) {
+		FileReader reader = new FileReader(fileName);
+		ArrayList<String> out = new ArrayList<String>();
+		String line;
+		while ((line = reader.getNextLine()) != null)
+			out.add(line);
+		return out;
+	}
+	
+	/**
 	 * Changes the file to be read
 	 */
 	public void setFile (String fileName) {

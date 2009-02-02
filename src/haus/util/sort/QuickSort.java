@@ -1,4 +1,4 @@
-package util.sort;
+package haus.util.sort;
 
 public class QuickSort {
 	    private static long comparisons = 0;
