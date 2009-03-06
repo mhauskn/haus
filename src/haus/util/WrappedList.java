@@ -89,8 +89,8 @@ public class WrappedList<E> implements List<E> {
 		for (int i = 0; i < sz; i++)
 			ar[i] = null;
 		start = 0;
-		end = 1;
-		empty = false;
+		end = 0;
+		empty = true;
 	}
 
 	/**
