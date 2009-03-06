@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.BufferedWriter;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Designed to write data to a standard file
@@ -114,5 +115,27 @@ public class DataWriter implements Output<String>
 	 */
 	public void add (String storable) {
 		writeln(storable);		
+	}
+	
+	/**
+	 * Simple way to write a file
+	 */
+	public static void writeFile (String fileName, List<String> data) {
+		DataWriter writer = new DataWriter(fileName);
+		for (String answer: data)
+			writer.write(answer);
+		writer.close();
+	}
+	
+	/**
+	 * Writes a list of objects to a file, calling the toString 
+	 * method of each object
+	 */
+	@SuppressWarnings("unchecked")
+	public static void writeObjects (String fileName, List data) {
+		DataWriter writer = new DataWriter(fileName);
+		for (int i = 0; i < data.size(); i++)
+			writer.writeln(data.get(i).toString());
+		writer.close();
 	}
 }

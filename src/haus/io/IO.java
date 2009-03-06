@@ -1,5 +1,7 @@
 package haus.io;
 
+import haus.misc.Map;
+
 /**
  * Abstract class representing any program which 
  * depends on input/output.
@@ -45,5 +47,15 @@ public abstract class IO <In,Out> {
 	 */
 	public void setOutput (Output<Out> newOutput) {
 		out = newOutput;
+	}
+	
+	/**
+	 * Applies a map function over our input. Keeps on 
+	 * reading and mapping input until we get null.
+	 */
+	public void mapInput (Map<In> m) {
+		In i;
+		while ((i = in.get()) != null)
+			m.map(i);
 	}
 }

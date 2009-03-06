@@ -3,7 +3,6 @@ package haus.rsch.evolution.elim;
 import haus.rsch.evolution.Organism;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 /**
  * Eliminates the worst x% of the class
@@ -11,6 +10,7 @@ import java.util.Collections;
  */
 public class PercentageEliminator implements Eliminator {
 	Double percentage_cut;
+	@SuppressWarnings("unchecked")
 	ArrayList<Organism> organisms;
 	
 	public PercentageEliminator (Double percentage) {
