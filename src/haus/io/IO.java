@@ -8,7 +8,7 @@ import haus.misc.Map;
  * @author Administrator
  *
  */
-public abstract class IO <In,Out> {
+public abstract class IO <In,Out> implements Map<In>{
 	/**
 	 * Generic input mechanism
 	 */
@@ -53,9 +53,9 @@ public abstract class IO <In,Out> {
 	 * Applies a map function over our input. Keeps on 
 	 * reading and mapping input until we get null.
 	 */
-	public void mapInput (Map<In> m) {
+	public void mapInput () {
 		In i;
 		while ((i = in.get()) != null)
-			m.map(i);
+			map(i);
 	}
 }
