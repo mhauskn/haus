@@ -8,16 +8,15 @@ import java.io.ObjectOutputStream;
 /**
  * Serializes and deserializes an object of type T
  */
-public class Serializer <T> {
+public class Serializer {
 	/**
 	 * Deserializes a given object of type T from a specified file
 	 */
-	@SuppressWarnings("unchecked")
-	public T deserialize (String fileName) {
+	public static Object deserialize (String fileName) {
 		try {
 			FileInputStream fis = new FileInputStream(fileName);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-			T myDeserializedObject = (T) ois.readObject();
+			Object myDeserializedObject = ois.readObject();
 			ois.close();
 			return myDeserializedObject;
 		} catch (Exception e) {
@@ -29,7 +28,7 @@ public class Serializer <T> {
 	/**
 	 * Serializes the given object to the given fileName
 	 */
-	public void serialize (T toSer, String fileName) {
+	public static void serialize (Object toSer, String fileName) {
 		try {
 			FileOutputStream fos = new FileOutputStream(fileName);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);

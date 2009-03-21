@@ -40,10 +40,8 @@ public class Misc {
 	 * Makes a deep copy of the given object by serializing and
 	 * de-serializing it.
 	 */
-	@SuppressWarnings("unchecked")
 	public static Object copyObject (Object original) {
-		Serializer s = new Serializer();
-		s.serialize(original, "test");
-		return s.deserialize("test");
+		Serializer.serialize(original, "test");
+		return Serializer.deserialize("test");
 	}
 }
