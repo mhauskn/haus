@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Designed to write data to a standard file
  */
-public class DataWriter implements Output<String>
+public class DataWriter implements Output<String>, Closable
 {
 	String file;
 	FileWriter fstream;
@@ -21,6 +21,21 @@ public class DataWriter implements Output<String>
 	 * Create a new data writer to write to file fileName
 	 */
 	public DataWriter (String fileName) {
+		initialize(fileName);
+	}
+	
+	/**
+	 * Create a new data writer and register it
+	 */
+	public DataWriter (String fileName, Closer c) {
+		c.registerClosable(this);
+		initialize(fileName);
+	}
+	
+	/**
+	 * Initializes the datawriter
+	 */
+	void initialize (String fileName) {
 		file = fileName;		
 		try {
 			fstream = new FileWriter (file);

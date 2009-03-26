@@ -14,10 +14,13 @@ public class Serializer {
 	 */
 	public static Object deserialize (String fileName) {
 		try {
+			System.out.print("Deserializing " + fileName + " ... ");
+			long start = System.currentTimeMillis();
 			FileInputStream fis = new FileInputStream(fileName);
 			ObjectInputStream ois = new ObjectInputStream(fis);
 			Object myDeserializedObject = ois.readObject();
 			ois.close();
+			System.out.println("[" + (System.currentTimeMillis() - start) + "ms]");
 			return myDeserializedObject;
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -30,11 +33,14 @@ public class Serializer {
 	 */
 	public static void serialize (Object toSer, String fileName) {
 		try {
+			System.out.print("Serializing " + fileName + " ... ");
+			long start = System.currentTimeMillis();
 			FileOutputStream fos = new FileOutputStream(fileName);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
 			oos.writeObject(toSer);
 			oos.flush();
 			oos.close();
+			System.out.println("[" + (System.currentTimeMillis() - start) + "ms]");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
