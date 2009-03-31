@@ -67,6 +67,14 @@ public class FileReader implements Input<String>
 	}
 	
 	/**
+	 * Checks if a given file exists.
+	 */
+	public static boolean exists (String fileName) {
+		File f = new File(fileName);
+		return f.exists();
+	}
+	
+	/**
 	 * Changes the file to be read
 	 */
 	public void setFile (String fileName) {
