@@ -1,5 +1,9 @@
 package haus.misc;
 
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+
 import haus.io.Serializer;
 
 public class Misc {
@@ -43,5 +47,31 @@ public class Misc {
 	public static Object copyObject (Object original) {
 		Serializer.serialize(original, "test");
 		return Serializer.deserialize("test");
+	}
+	
+	/**
+	 * Attempts to execute a command. Returns stdout and stderr
+	 * concatenated into a single string.
+	 */
+	public static String exec (String command) {
+		try {
+			Process p = Runtime.getRuntime().exec(command);
+			String out = "";
+			BufferedReader stdInput = new BufferedReader(new 
+					InputStreamReader(p.getInputStream()));
+			
+			BufferedReader stdError = new BufferedReader(new 
+					InputStreamReader(p.getErrorStream()));
+			String line;
+			while ((line = stdInput.readLine()) != null)
+			    out += line;
+			while ((line = stdError.readLine()) != null)
+			    out += line;
+			return out;
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+		return null;
 	}
 }

@@ -9,7 +9,7 @@ import java.util.List;
 /**
  * Designed to write data to a standard file
  */
-public class DataWriter implements Output<String>, Closable
+public class DataWriter implements Pipe<String>, Closable
 {
 	String file;
 	FileWriter fstream;
@@ -128,8 +128,9 @@ public class DataWriter implements Output<String>, Closable
 	/**
 	 * Writes our storable string to output
 	 */
-	public void add (String storable) {
-		writeln(storable);		
+	public boolean add (String storable) {
+		writeln(storable);	
+		return true;
 	}
 	
 	/**
@@ -152,5 +153,9 @@ public class DataWriter implements Output<String>, Closable
 		for (int i = 0; i < data.size(); i++)
 			writer.writeln(data.get(i).toString());
 		writer.close();
+	}
+
+	public String get() {
+		return null;
 	}
 }

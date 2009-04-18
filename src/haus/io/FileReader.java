@@ -10,9 +10,10 @@ import java.util.ArrayList;
 import java.util.Hashtable;
 
 /**
- * Reads files
+ * Reads files -- A simple and flexible class for doing 
+ * all types file reading.
  */
-public class FileReader implements Input<String>
+public class FileReader implements Pipe<String>
 {	
 	File rootDir;
 		
@@ -266,5 +267,9 @@ public class FileReader implements Input<String>
 		dStream = new DataInputStream(fStream);
 		iStream = new InputStreamReader(dStream);
 		bReader = new BufferedReader(iStream);
+	}
+
+	public boolean add(String Outputable) {
+		return false;
 	}
 }
