@@ -36,7 +36,7 @@ public class Misc {
 	public static Object classForName (Reflection original) {
 		String name = original.getClass().getCanonicalName();
 		Class[] classes = original.getTemplate();
-		Object[] args = original.reflect();
+		Object[] args = original.getConstructorArgs();
 		return classForName(name, classes, args);
 	}
 	

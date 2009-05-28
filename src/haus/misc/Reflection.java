@@ -8,7 +8,8 @@ package haus.misc;
 public interface Reflection {
 	/**
 	 * Creates the template which specifies which constructor to 
-	 * call upon.
+	 * call upon. The specifies the classes of the arguments which
+	 * need to be given to the constructor.
 	 */
 	@SuppressWarnings("unchecked")
 	public Class[] getTemplate();
@@ -16,7 +17,6 @@ public interface Reflection {
 	/**
 	 * Create the object array which serves as the parameters 
 	 * to construct another object of this type.
-	 * @return
 	 */
-	public Object[] reflect();
+	public Object[] getConstructorArgs ();
 }

@@ -14,6 +14,10 @@ public class Serializer {
 	 */
 	public static Object deserialize (String fileName) {
 		try {
+			if (!FileReader.exists(fileName)) {
+				System.out.println("File: " + fileName + " doesn't exist.");
+				return null;
+			}
 			System.out.print("Deserializing " + fileName + " ... ");
 			long start = System.currentTimeMillis();
 			FileInputStream fis = new FileInputStream(fileName);
